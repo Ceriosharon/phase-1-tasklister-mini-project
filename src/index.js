@@ -1,33 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // your code here// Get elements from the DOM
-const taskForm = document.getElementById('create-task-form');
-const taskInput = document.getElementById('new-task-description');
-const taskList = document.getElementById('tasks');
+  const taskForm = document.getElementById('create-task-form');
+  const taskInput = document.getElementById('new-task-description');
+  const taskList = document.getElementById('tasks');
 
-// Function to add a new task
-const addTask = (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+  const addTask = (event) => {
+      event.preventDefault();
+      const taskText = taskInput.value.trim();
 
-    const taskText = taskInput.value.trim(); // Get the input value
+      if (taskText) {
+          const li = document.createElement('li');
+          li.textContent = taskText;
 
-    if (taskText) {
-        const li = document.createElement('li'); // Create a new list item
-        li.textContent = taskText; // Set the text of the list item
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'Remove';
+          removeBtn.onclick = () => {
+              taskList.removeChild(li);
+          };
 
-        const removeBtn = document.createElement('button'); // Create a remove button
-        removeBtn.textContent = 'Remove'; // Set button text
-        removeBtn.onclick = () => {
-            taskList.removeChild(li); // Remove the task from the list
-        };
+          li.appendChild(removeBtn);
+          taskList.appendChild(li);
+          taskInput.value = '';
+      }
+  };
 
-        li.appendChild(removeBtn); // Append the remove button to the list item
-        taskList.appendChild(li); // Append the list item to the task list
-        
-        taskInput.value = ''; // Clear the input field
-    }
-};
-
-// Event listener for the form submission
-taskForm.addEventListener('submit', addTask);
-
+  taskForm.addEventListener('submit', addTask);
 });
